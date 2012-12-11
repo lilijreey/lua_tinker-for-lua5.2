@@ -5,6 +5,8 @@
 // Copyright (c) 2005-2007 Kwon-il Lee (zupet@hitel.net)
 // 
 // please check Licence.txt file for licence and legal issues. 
+//
+// Modify by Lili lilijreey@gmail.com for Lua5.2 version Thu Nov 15 17:47:06 CST 2012
 
 
 #if defined(_MSC_VER)
