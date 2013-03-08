@@ -5,8 +5,7 @@
 // Copyright (c) 2005-2007 Kwon-il Lee (zupet@hitel.net)
 // 
 // please check Licence.txt file for licence and legal issues. 
-//
-// Modify by Lili lilijreey@gmail.com for Lua5.2 version Thu Nov 15 17:47:06 CST 2012
+// modify by Lili for Lua5.2 version Thu Nov 15 17:47:06 CST 2012
 
 #if !defined(_LUA_TINKER_H_)
 #define _LUA_TINKER_H_
@@ -815,7 +814,8 @@ void setglobal(lua_State *L, const char *name, T object)
 template<typename F> 
 void def(lua_State* L, const char* name, F func)
 { 
-//  lua_pushlightuserdata(L, (void*)func);
+  lua_pushstring(L, name);
+  lua_pushlightuserdata(L, (void*)func);
   push_functor(L, func);
   lua_setglobal(L, name);
 }

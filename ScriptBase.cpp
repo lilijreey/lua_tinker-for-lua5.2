@@ -22,13 +22,3 @@ bool ScriptBase::defaultInti( const char *path )
 }
 
 
-void ScriptBase::regFunc(const char *funcName, lua_CFunction func)
-{
-  lua_register(_L, funcName, func);
-}
-
-void ScriptBase::dofile(const char *filename)
-{
-  lua_tinker::dofile( _L, filename);
-
-}

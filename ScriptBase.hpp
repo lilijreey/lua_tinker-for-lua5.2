@@ -25,7 +25,10 @@ public:
     //@brief: 默认的初始化，一般情况下调用这个就可以
     bool defaultInti(const char *str);
 
-    void dofile(const char *filename);
+    void dofile(const char *filename)
+    {
+      lua_tinker::dofile( _L, filename);
+    }
 
     //HACK 使用引用传递，
     template<typename T>
@@ -40,8 +43,9 @@ public:
       return lua_tinker::getglobal<T>(_L, name);
     }
 
-    //导入全局函数 warp for lua_register
-    void regFunc(const char *funcName, lua_CFunction func);
+    //导入全局函数 
+    template<typename F>
+    void regFunc(const char *funcName, F func);
 
     //导入class 
     template<typename Class>
@@ -54,7 +58,6 @@ public:
     void regClassVar(const char* name, VAR BASE::*val) {lua_tinker::class_mem<Class>(_L, name, val);}
 
 public:
-
 
     // Call Lua Func {
     template <typename R>
@@ -93,5 +96,19 @@ protected:
     std::string _path;
 
 };
+
+//导入非lua_CFunction 类型的函数
+template<typename F>
+inline void ScriptBase::regFunc(const char *funcName, F func) 
+{
+  lua_tinker::def<F>(_L, funcName, func);
+}
+
+//导入全局函数 warp for lua_register
+template<>
+inline void ScriptBase::regFunc<lua_CFunction>(const char *funcName, lua_CFunction func)
+{
+   lua_register(_L, funcName, func);
+}
 
 #endif   /* ----- #ifndef funcbase_INC  ----- */
